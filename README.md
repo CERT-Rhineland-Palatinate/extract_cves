@@ -18,7 +18,10 @@ python3 extract_cves.py -u https://www.oracle.com/technetwork/security-advisory/
 python3 extract_cves.py -u https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.34
 
 
-# Get CVEs from file
+# Get CVEs from file with verbose output
+python3 extract_cves.py -v -f malformed_cves.txt
+
+# Extended Check - every found and formal valid CVE is checked against the database
 python3 extract_cves.py -v -f malformed_cves.txt
 
 # Check one CVE
@@ -28,6 +31,8 @@ python3 extract_cves.py -c CVE-2018-0815
 ### Prerequisites
 
 Python3 with the stdlib.
+Mitre csv database when using the extended check.
+(Can be downloaded for free at https://cve.mitre.org/data/downloads/allitems.csv.gz)
 
 ### Installing
 
