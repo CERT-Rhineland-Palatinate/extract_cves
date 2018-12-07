@@ -9,7 +9,7 @@ The script extracts all CVE numbers from a given resource (file or url).
 python3 extract_cves.py -h
 ```
 
-## Example
+## Examples
 
 ```
 # Get CVEs from URL
