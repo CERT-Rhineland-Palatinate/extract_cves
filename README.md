@@ -15,6 +15,8 @@ python3 extract_cves.py -h
 # Get CVEs from URL
 python3 extract_cves.py -u https://chromereleases.googleblog.com/2018/12/stable-channel-update-for-desktop.html
 python3 extract_cves.py -u https://www.oracle.com/technetwork/security-advisory/cpuoct2018-4428296.html
+python3 extract_cves.py -u https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.34
+
 
 # Get CVEs from file
 python3 extract_cves.py -f malformed_cves.txt
