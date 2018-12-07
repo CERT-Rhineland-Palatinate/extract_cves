@@ -265,7 +265,7 @@ if __name__ == "__main__":
     elif args.check:
         s, m = c.check_cve(args.check, verbose=1)
         print("CVE: {0} Status: {1} Message: {2}".format(args.check, s, m))
-        exit(c.errors)
+        exit(0)
 
     c.print_cves()
 
