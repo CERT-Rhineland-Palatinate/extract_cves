@@ -215,7 +215,7 @@ class ExtractCVEs():
     def _extract_cves(self):
         """
         Iterates over the chunks created by _create_chunks
-        and calls extract_cve
+        and calls extract_cve and check_cve
         """
 
         for chunk in self.chunks:
