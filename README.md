@@ -17,11 +17,10 @@ python3 extract_cves.py -u https://chromereleases.googleblog.com/2018/12/stable-
 python3 extract_cves.py -u https://www.oracle.com/technetwork/security-advisory/cpuoct2018-4428296.html
 python3 extract_cves.py -u https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.34
 
-
 # Get CVEs from file with verbose output
 python3 extract_cves.py -v -f malformed_cves.txt
 
-# Extended Check - every found and formal valid CVE is checked against the database
+# Extended Check - every found and formal valid CVE is checked against the mitre database
 python3 extract_cves.py -v -f malformed_cves.txt
 
 # Check one CVE
