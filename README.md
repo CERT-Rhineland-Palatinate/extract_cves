@@ -1,6 +1,6 @@
-# Extract CVEs
+# Extract CVEs from resource (file, url)
 
-I was bored of copy and pasting CVE numbers. 
+I was bored of copying and pasting CVE numbers. 
 The script extracts all CVE numbers from a given resource (file or url).
 
 ## Getting Started
