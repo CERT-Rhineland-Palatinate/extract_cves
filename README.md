@@ -43,7 +43,7 @@ The script has no other dependencies as Python3 with the stdlib.
 
 ## Authors
 
-* **@secw0tschel** - *Initial work* - (https://github.com/wotschel)
+* **@secw0tschel** (https://twitter.com/secw0tschel) - *Initial work* 
 
 ## License
 
