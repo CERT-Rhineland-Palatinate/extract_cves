@@ -3,6 +3,7 @@
 import urllib.request
 import datetime
 import argparse
+import os
 
 __version__ = 0.01
 __date__ = "07.12.2018"
@@ -213,14 +214,64 @@ class ExtractCVEs():
 
         print(output)
 
+    
+    def compare_real_cves(self):
+        import gzip
+        import time
+
+        if len(self.cves) == 0:
+            print("No CVEs present")
+            exit(0)
+   
+        fn = "allitems.csv.gz"
+        self.existing_cves = []
+
+        if not os.path.exists(fn):
+            print("File allitems.csv.gz does not exists")
+            print("Please download it at:")
+            print("https://cve.mitre.org/data/downloads/allitems.csv.gz")
+            exit(-1)
+
+        mtime = int(os.path.getmtime(fn))
+        now = int(time.time())
+
+        age = (now - mtime)/3600
+        print("Age of CVE database: {0} hours".format(age))
+
+        if age > 48:
+            print("Your CVE database seems outdated")
+            print("Please download a actual one at:")
+            print("https://cve.mitre.org/data/downloads/allitems.csv.gz")
+
+        with gzip.open(fn,'rb') as f:
+            for line in f:
+                try:
+                    line = line.decode()
+                except UnicodeDecodeError:
+                    print("Error Reading Line")
+                    continue
+                line = line.split(",")
+                self.existing_cves.append((line[0]))
+        
+        tmp = []
+        for cve in self.cves:
+            if not cve in self.existing_cves:
+                print("This CVE seems not to exist: {0}".format(cve))
+            else:
+                tmp.append(cve)
+
+        self.cves = tmp
 
 if __name__ == "__main__":
+
+
     p = argparse.ArgumentParser()
     g = p.add_mutually_exclusive_group()
     g.add_argument("-u", "--url", help="url to fetch and extract CVEs")
     g.add_argument("-f", "--file", help="path to local file to extract CVEs")
     g.add_argument("-c", "--check", help="check a CVE for formal validity")
     p.add_argument("-v", "--verbose", action="store_true", help="verbose output")
+    p.add_argument("-e", "--extended", action="store_true", help="checks found cves against the Mitre DB, which has to be downloaded first")
     p.add_argument("-V", "--version", action="store_true", help="print the version and exit")
     args = p.parse_args()
 
@@ -246,6 +297,8 @@ if __name__ == "__main__":
         print("CVE: {0} Status: {1} Message: {2}".format(args.check, s, m))
         exit(0)
 
+    if args.extended == True:
+        c.compare_real_cves()
     c.print_cves()
 
     # Todo

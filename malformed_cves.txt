@@ -1,5 +1,7 @@
-# This two CVEs are correct
+# This two CVEs are correct and exist
 CVE-2018-0815, CVE-2019-0815
+# This CVE is formal correct but does not exist
+CVE-2019-9999999
 # All following are malformed
 CVE-2018-12345678
 CVE-2018-1, CVE-201810000, 2018-CVE-10000
