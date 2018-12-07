@@ -1,7 +1,7 @@
 # Extract CVEs from resource (file, url)
 
 I was bored of copying and pasting CVE numbers (https://cve.mitre.org/) for our local warning and information service. 
-The script extracts all CVE numbers from a given resource (file or url) and prints it to stdout.
+The script extracts all CVE numbers from a given resource (file or url) and prints them to stdout.
 
 ## Getting Started
 
