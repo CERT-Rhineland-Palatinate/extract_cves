@@ -31,7 +31,9 @@ python3 extract_cves.py -c CVE-2018-0815
 ### Prerequisites
 
 Python3 with the stdlib.
+
 Mitre csv database when using the extended check.
+
 (Can be downloaded for free at https://cve.mitre.org/data/downloads/allitems.csv.gz)
 
 ### Installing
