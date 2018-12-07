@@ -19,7 +19,7 @@ python3 extract_cves.py -u https://tomcat.apache.org/security-8.html#Fixed_in_Ap
 
 
 # Get CVEs from file
-python3 extract_cves.py -f malformed_cves.txt
+python3 extract_cves.py -v -f malformed_cves.txt
 
 # Check one CVE
 python3 extract_cves.py -c CVE-2018-0815
