@@ -202,9 +202,12 @@ class ExtractCVEs():
         self.cves.sort()
 
     def get_cves(self):
+        """ No, i will not write a description for this one """
+
         return(self.cves)
 
     def print_cves(self):
+        """ prints all found cves to stdout """
 
         output = "\n"
         for cve in self.cves:
@@ -216,6 +219,8 @@ class ExtractCVEs():
 
     
     def compare_real_cves(self):
+        """ checks found CVEs against the MITRE database """
+
         print("Running extended check")
         import gzip
         import time
