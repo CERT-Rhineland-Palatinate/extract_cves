@@ -171,7 +171,7 @@ class ExtractCVEs():
                 errors.append("CVEs have a maximum of 7 digits in their sequence number")
 
             now = datetime.datetime.now()
-            if type(cve_year) == "int" and cve_year - now.year >= 2:
+            if isinstance(cve_year, int) and cve_year - now.year >= 2:
                 msg = "A year {0} is formal correct but uncommon as we have {1}".format(cve_year, now.year)
                 errors.append(msg)
         except IndexError:
