@@ -7,6 +7,7 @@ import os
 
 __version__ = 0.02
 __date__ = "07.12.2018"
+__author__ = "@secw0tschel"
 
 
 class ExtractCVEs():
@@ -99,7 +100,7 @@ class ExtractCVEs():
 
         self._verb("Checking CVE: {0}".format(cve))
 
-        #if not len(cve) >= 13:
+        # if not len(cve) >= 13:
         #    errors.append("The minimum length of a CVE is thirteen chars")
 
         if cve.count("-") != 2:
@@ -107,7 +108,7 @@ class ExtractCVEs():
 
         if not cve.startswith("CVE-"):
             errors.append("A valid CVE starts with CVE-")
-        
+
         # very basic tests failed
         if len(errors) > 0:
             return(len(errors), errors)
@@ -119,14 +120,14 @@ class ExtractCVEs():
 
         if not cve[0] == "CVE":
             errors.append("Part one of a valid CVE is 'CVE'")
-        
+
         # TODO: change this 9999 ad
         if not len(cve[1]) == 4 or not cve[1].isdigit():
             errors.append("Part two of a valid CVE contains four digits representing the year")
 
         if not len(cve[2]) >= 4 or not cve[2].isdigit():
             errors.append("Sequence number is 4 digits minium length")
-        
+
         # basic tests failed
         if len(errors) > 0:
             return(len(errors), errors)
@@ -138,7 +139,7 @@ class ExtractCVEs():
 
         if cve_year < 1999:
             errors.append("Their are no CVE numbers before 1999")
-                
+
         if cve_year < 2016 and cve_no > 9999:
             msg = "CVEs before 2016 had a maxium of four digits in their sequence number"
             errors.append(msg)
@@ -150,7 +151,7 @@ class ExtractCVEs():
         if cve_year - now.year >= 2:
             msg = "A year {0} is formal correct but uncommon as we have {1}".format(cve_year, now.year)
             errors.append(msg)
-    
+
         if len(errors) == 0:
             return(0, ["OK"])
         else:
@@ -217,7 +218,6 @@ class ExtractCVEs():
 
         print(output)
 
-    
     def compare_real_cves(self):
         """ checks found CVEs against the MITRE database """
 
@@ -228,7 +228,7 @@ class ExtractCVEs():
         if len(self.cves) == 0:
             print("No CVEs present")
             exit(0)
-   
+
         fn = "allitems.csv.gz"
         self.existing_cves = []
 
@@ -249,7 +249,7 @@ class ExtractCVEs():
             print("Please download a actual one at:")
             print("https://cve.mitre.org/data/downloads/allitems.csv.gz")
 
-        with gzip.open(fn,'rb') as f:
+        with gzip.open(fn, 'rb') as f:
             for line in f:
                 try:
                     line = line.decode()
@@ -258,15 +258,16 @@ class ExtractCVEs():
                     continue
                 line = line.split(",")
                 self.existing_cves.append((line[0]))
-        
+
         tmp = []
         for cve in self.cves:
-            if not cve in self.existing_cves:
+            if cve not in self.existing_cves:
                 print("This CVE seems not to exist: {0}".format(cve))
             else:
                 tmp.append(cve)
 
         self.cves = tmp
+
 
 if __name__ == "__main__":
 
@@ -304,6 +305,9 @@ if __name__ == "__main__":
 
     if args.extended is True:
         c.compare_real_cves()
+    else:
+        print("Extended Check is off. Also formal correct but not existing CVEs will be printed.")
+
     c.print_cves()
 
     # Todo
