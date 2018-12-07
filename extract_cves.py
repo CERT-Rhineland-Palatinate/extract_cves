@@ -10,6 +10,8 @@ class ExtractCVEs():
     def __init__(self, verbose=False):
         self.cves = []
         self.chunks = []
+        self.errors = []
+        self.exit_code = 0
 
         self.verbose = verbose
 
@@ -71,6 +73,7 @@ class ExtractCVEs():
             # print(line)
             if len(line) == 0:
                 continue
+            # check if the line contains a CVE
             elif line.find("CVE-") == -1:
                 continue
 
@@ -79,72 +82,100 @@ class ExtractCVEs():
             line = line.replace(";", " ")
             line = line.split(" ")
             for l in line:
+                # check if the chunk contains a CVE
                 if l.find("CVE-") > -1:
                     self.chunks.append(l)
 
-    @staticmethod
-    def check_cve(cve, verbose=0):
+    def check_cve(self, cve, verbose=0):
         """
         Checks if a cve seems to be formal valid
         """
 
         errors = []
 
-        if verbose == 1:
-            print("Checking CVE: {0}".format(cve))
+        self._verb("Checking CVE: {0}".format(cve))
 
-        # if not len(cve) >= 13:
-        #    errors.append("The minimum length of a CVE is thirteen")
+        if not len(cve) >= 13:
+            errors.append("The minimum length of a CVE is thirteen chars")
 
         if cve.count("-") != 2:
             errors.append("A valid CVE contains two dashes")
 
         if not cve.startswith("CVE-"):
-            errors.append("CVE starts with CVE-")
+            errors.append("A valid CVE starts with CVE-")
 
         cve = cve.split("-")
 
-        if not len(cve) == 3:
-            errors.append("A sequenze (CVE-YYYY-SSSS) seems to be missing")
-            return(len(errors), errors)
+        #if not len(cve) == 3:
+        #    errors.append("A sequenze (CVE-YYYY-SSSS) seems to be missing")
+        #    # return(len(errors), errors)
 
-        if not len(cve[0]) == 3:
-            errors.append("Part one is 'CVE'")
-        if not len(cve[1]) == 4:
-            errors.append("Part two is YYYY")
-        if not len(cve[2]) >= 4:
-            errors.append("Sequence number is 4 digits minium length")
+        try:
+            if not len(cve[0]) == 3:
+                errors.append("Part one of a valid CVE is 'CVE'")
+        except IndexError:
+            pass
+        
+        try:
+            if not len(cve[1]) == 4:
+                errors.append("Part two of a valid CVE is YYYY")
+        except IndexError:
+            pass
 
-        cve_year = cve[1]
-        cve_no = cve[2]
+        try:
+            if not len(cve[2]) >= 4:
+                errors.append("Sequence number is 4 digits minium length")
+        except IndexError:
+            pass
+
+        try:
+            cve_year = cve[1]
+            cve_no = cve[2]
+        except IndexError:
+            pass
+
 
         try:
             cve_year = int(cve_year)
         except ValueError:
             # TODO: change this 9999 ad
-            errors.append("Err: year portion is 4 digits until the year 10000 ad")
-            return(len(errors), errors)
+            errors.append("year portion are 4 digits until the year 10000 ad")
+        except IndexError:
+            pass
+        except UnboundLocalError:
+            pass
 
         try:
             cve_no = int(cve_no)
         except ValueError:
-            errors.append("Err: Sequence number contains just digits")
+            errors.append("Sequence number contains just digits")
+        except IndexError:
+            pass
+        except UnboundLocalError:
+            pass
 
-        if cve_year < 1999:
-            errors.append("Err: Their are no CVE numbers before 1999")
 
-        if cve_year < 2016 and len(cve[2]) > 4:
-            msg = "CVEs before 2016 had a maxium of four digits in their sequence number"
-            errors.append(msg)
+        try:
+            if isinstance(cve_year, int) and cve_year < 1999:
+                errors.append("Err: Their are no CVE numbers before 1999")
+                
 
-        if len(cve[2]) > 7:
-            errors.append("CVEs have a maximum of 7 digits in their sequence number")
+            if isinstance(cve_year, int) and cve_year < 2016 and len(cve[2]) > 4:
+                msg = "CVEs before 2016 had a maxium of four digits in their sequence number"
+                errors.append(msg)
 
-        now = datetime.datetime.now()
-        if cve_year - now.year >= 2:
-            msg = "A year {0} is formal correct but uncommon as we have {1}".format(cve_year, now.year)
-            errors.append(msg)
+            if len(cve[2]) > 7:
+                errors.append("CVEs have a maximum of 7 digits in their sequence number")
 
+            now = datetime.datetime.now()
+            if type(cve_year) == "int" and cve_year - now.year >= 2:
+                msg = "A year {0} is formal correct but uncommon as we have {1}".format(cve_year, now.year)
+                errors.append(msg)
+        except IndexError:
+            pass
+        except UnboundLocalError:
+            pass
+    
         if len(errors) == 0:
             return(0, ["OK"])
         else:
@@ -234,8 +265,9 @@ if __name__ == "__main__":
     elif args.check:
         s, m = c.check_cve(args.check, verbose=1)
         print("CVE: {0} Status: {1} Message: {2}".format(args.check, s, m))
-        exit(0)
+        exit(c.errors)
 
     c.print_cves()
 
+    # Todo
     exit(0)
