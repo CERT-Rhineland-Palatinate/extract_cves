@@ -4,6 +4,9 @@ import urllib.request
 import datetime
 import argparse
 
+__version__ = 0.01
+__date__ = "07.12.2018"
+
 
 class ExtractCVEs():
 
@@ -247,7 +250,12 @@ if __name__ == "__main__":
     g.add_argument("-f", "--file", help="path to local file to extract CVEs")
     g.add_argument("-c", "--check", help="check a CVE for formal validity")
     p.add_argument("-v", "--verbose", action="store_true", help="verbose output")
+    p.add_argument("-V", "--version", action="store_true", help="print the version and exit")
     args = p.parse_args()
+
+    if args.version:
+        print("Version: {0} build {1}".format(__version__, __date__))
+        exit(0)
 
     verbose = args.verbose
 
