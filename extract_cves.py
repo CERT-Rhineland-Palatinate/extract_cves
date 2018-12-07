@@ -216,6 +216,7 @@ class ExtractCVEs():
 
     
     def compare_real_cves(self):
+        print("Running extended check")
         import gzip
         import time
 
@@ -264,7 +265,6 @@ class ExtractCVEs():
 
 if __name__ == "__main__":
 
-
     p = argparse.ArgumentParser()
     g = p.add_mutually_exclusive_group()
     g.add_argument("-u", "--url", help="url to fetch and extract CVEs")
@@ -297,7 +297,7 @@ if __name__ == "__main__":
         print("CVE: {0} Status: {1} Message: {2}".format(args.check, s, m))
         exit(0)
 
-    if args.extended == True:
+    if args.extended is True:
         c.compare_real_cves()
     c.print_cves()
 
