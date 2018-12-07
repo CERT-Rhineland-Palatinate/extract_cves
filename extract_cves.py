@@ -151,7 +151,7 @@ class ExtractCVEs():
         try:
             cve_no = int(cve_no)
         except ValueError:
-            errors.append("Sequence number contains just digits")
+            errors.append("A valid sequence number contains just digits")
         except IndexError:
             pass
         except UnboundLocalError:
@@ -160,7 +160,7 @@ class ExtractCVEs():
 
         try:
             if isinstance(cve_year, int) and cve_year < 1999:
-                errors.append("Err: Their are no CVE numbers before 1999")
+                errors.append("Their are no CVE numbers before 1999")
                 
 
             if isinstance(cve_year, int) and cve_year < 2016 and len(cve[2]) > 4:
