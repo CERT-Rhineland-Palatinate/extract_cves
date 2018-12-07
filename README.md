@@ -6,6 +6,8 @@ The script extracts all CVE numbers from a given resource (file or url) and prin
 ## Getting Started
 
 ```
+git clone https://github.com/CERT-Rhineland-Palatinate/extract_cves.git
+cd extract_cves
 python3 extract_cves.py -h
 ```
 
