@@ -5,7 +5,7 @@ import datetime
 import argparse
 import os
 
-__version__ = 0.01
+__version__ = 0.02
 __date__ = "07.12.2018"
 
 
