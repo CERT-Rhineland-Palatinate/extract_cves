@@ -37,6 +37,8 @@ Mitre csv database when using the extended check.
 
 (Can be downloaded for free at https://cve.mitre.org/data/downloads/allitems.csv.gz)
 
+The script will ask you to download it for you, if the db is not present.
+
 ### Installing
 
 The script has no other dependencies as Python3 with the stdlib. 
