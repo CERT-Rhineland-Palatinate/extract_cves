@@ -259,10 +259,11 @@ class ExtractCVEs():
         with gzip.open(fn, 'rb') as f:
             i = 0
             for line in f:
+                i += 1
                 try:
                     line = line.decode()
                 except UnicodeDecodeError:
-                    print("Error Reading Line")
+                    print("Error Reading Line {0} from MITRE DB".format(i))
                     continue
                 line = line.split(",")
                 self.existing_cves.append((line[0]))
