@@ -218,7 +218,7 @@ class ExtractCVEs():
 
         print(output)
 
-    def compare_real_cves(self):
+    def extended_cve_check(self):
         """ checks found CVEs against the MITRE database """
 
         print("Running extended check")
@@ -304,7 +304,7 @@ if __name__ == "__main__":
         exit(0)
 
     if args.extended is True:
-        c.compare_real_cves()
+        c.extended_cve_check()
     else:
         print("Extended Check is off. Also formal correct but not existing CVEs will be printed.")
 
