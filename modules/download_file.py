@@ -2,6 +2,7 @@
 import sys
 from urllib.request import urlretrieve
 
+
 class DownloadFile():
 
     def __init__(self, source, dest, verbose=False):
@@ -11,6 +12,7 @@ class DownloadFile():
 
         self.download()
 
+    # Credits go to https://stackoverflow.com/users/4279/jfs
     def reporthook(self, blocknum, blocksize, totalsize):
         readsofar = blocknum * blocksize
         if totalsize > 0:
@@ -18,14 +20,13 @@ class DownloadFile():
             s = "\r%5.1f%% %*d / %d" % (
                 percent, len(str(totalsize)), readsofar, totalsize)
             sys.stderr.write(s)
-            if readsofar >= totalsize: # near the end
+            if readsofar >= totalsize:
                 sys.stderr.write("\n")
-        else: # total size is unknown
+        else:
             sys.stderr.write("read %d\n" % (readsofar,))
 
     def download(self):
         urlretrieve(self.source, self.dest, self.reporthook)
-
 
 
 if __name__ == "__main__":

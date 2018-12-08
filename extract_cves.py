@@ -223,10 +223,9 @@ class ExtractCVEs():
             if d == "n":
                 print("Exiting")
                 exit(0)
-            
+
             from modules.download_file import DownloadFile as F
             f = F("https://cve.mitre.org/data/downloads/allitems.csv.gz", "allitems.csv.gz")
-
 
     def extended_cve_check(self):
         """ checks found CVEs against the MITRE database """
