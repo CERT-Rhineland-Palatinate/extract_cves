@@ -236,6 +236,7 @@ class ExtractCVEs():
             print("File allitems.csv.gz does not exists")
             print("Please download it at:")
             print("https://cve.mitre.org/data/downloads/allitems.csv.gz")
+            from modules.download_file 
             exit(-1)
 
         mtime = int(os.path.getmtime(fn))
