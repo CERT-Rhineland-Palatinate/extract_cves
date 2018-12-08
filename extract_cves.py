@@ -218,6 +218,16 @@ class ExtractCVEs():
 
         print(output)
 
+    def _download_mitre_db(self):
+            d = input("Download it from cve.mitre.org? Y/n ")
+            if d == "n":
+                print("Exiting")
+                exit(0)
+            
+            from modules.download_file import DownloadFile as F
+            f = F("https://cve.mitre.org/data/downloads/allitems.csv.gz", "allitems.csv.gz")
+
+
     def extended_cve_check(self):
         """ checks found CVEs against the MITRE database """
 
@@ -233,15 +243,8 @@ class ExtractCVEs():
         self.existing_cves = []
 
         if not os.path.exists(fn):
-            print("File allitems.csv.gz does not exists")
-            d = input("Download it from cve.mitre.org? Y/n ")
-            if d == "n":
-                print("Exiting")
-                exit(0)
-            
-            from modules.download_file import DownloadFile as F
-            f = F("https://cve.mitre.org/data/downloads/allitems.csv.gz", "allitems.csv.gz")
-            exit(-1)
+            print("MITRE DB allitems.csv.gz does not exist")
+            self._download_mitre_db()
 
         mtime = int(os.path.getmtime(fn))
         now = int(time.time())
@@ -251,10 +254,10 @@ class ExtractCVEs():
 
         if age > 48:
             print("Your CVE database seems outdated")
-            print("Please download a actual one at:")
-            print("https://cve.mitre.org/data/downloads/allitems.csv.gz")
+            self._download_mitre_db()
 
         with gzip.open(fn, 'rb') as f:
+            i = 0
             for line in f:
                 try:
                     line = line.decode()
