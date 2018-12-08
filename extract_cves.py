@@ -5,8 +5,8 @@ import datetime
 import argparse
 import os
 
-__version__ = 0.02
-__date__ = "07.12.2018"
+__version__ = 0.03
+__date__ = "08.12.2018"
 __author__ = "@secw0tschel"
 
 
