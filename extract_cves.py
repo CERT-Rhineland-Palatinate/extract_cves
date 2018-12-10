@@ -138,7 +138,7 @@ class ExtractCVEs():
         cve_no = int(cve_no)
 
         if cve_year < 1999:
-            errors.append("Their are no CVE numbers before 1999")
+            errors.append("There are no CVE numbers before 1999")
 
         if cve_year < 2016 and cve_no > 9999:
             msg = "CVEs before 2016 had a maxium of four digits in their sequence number"

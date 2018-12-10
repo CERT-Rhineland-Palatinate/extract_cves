@@ -23,7 +23,7 @@ python3 extract_cves.py -u https://tomcat.apache.org/security-8.html#Fixed_in_Ap
 python3 extract_cves.py -v -f malformed_cves.txt
 
 # Extended Check - every found and formal valid CVE is checked against the mitre database
-python3 extract_cves.py -v -f malformed_cves.txt
+python3 extract_cves.py -v -e -f malformed_cves.txt
 
 # Check one CVE
 python3 extract_cves.py -c CVE-2018-0815
