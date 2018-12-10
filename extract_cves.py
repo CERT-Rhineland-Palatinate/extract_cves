@@ -284,7 +284,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     g = p.add_mutually_exclusive_group()
     g.add_argument("-u", "--url", help="url to fetch and extract CVEs")
-    g.add_argument("-f", "--file", help="path to local file to extract CVEs")
+    g.add_argument("-f", "--file", help="path to local text file to extract CVEs")
     g.add_argument("-c", "--check", help="check a CVE for formal validity")
     p.add_argument("-v", "--verbose", action="store_true", help="verbose output")
     p.add_argument("-e", "--extended", action="store_true", help="checks found cves against the Mitre DB, which has to be downloaded first")
