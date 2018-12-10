@@ -3,10 +3,14 @@
 import urllib.request
 import datetime
 import argparse
+import gzip
+import time
 import os
+            
+from modules.download_file import DownloadFile as F
 
-__version__ = 0.03
-__date__ = "08.12.2018"
+__version__ = 0.031
+__date__ = "10.12.2018"
 __author__ = "@secw0tschel"
 
 
@@ -219,20 +223,18 @@ class ExtractCVEs():
         print(output)
 
     def _download_mitre_db(self):
+            """ Downloads the MITRE database """
             d = input("Download it from cve.mitre.org? Y/n ")
             if d == "n":
                 print("Exiting")
                 exit(0)
 
-            from modules.download_file import DownloadFile as F
             f = F("https://cve.mitre.org/data/downloads/allitems.csv.gz", "allitems.csv.gz")
 
     def extended_cve_check(self):
         """ checks found CVEs against the MITRE database """
 
         print("Running extended check")
-        import gzip
-        import time
 
         if len(self.cves) == 0:
             print("No CVEs present")
