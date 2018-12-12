@@ -219,8 +219,10 @@ class ExtractCVEs():
             output = "{0}{1}, ".format(output, cve)
 
         output = output[0:-2]
-
+    
+        print("\nFound {0} CVEs".format(len(self.cves)))
         print(output)
+        print()
 
     def _download_mitre_db(self):
             """ Downloads the MITRE database """
