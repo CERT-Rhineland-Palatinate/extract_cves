@@ -76,8 +76,14 @@ class ExtractCVEs():
         and creates chunks from this ressource
         """
 
+        i = 0
         for line in self.response:
-            line = line.decode()
+            i += 1
+            try:
+                line = line.decode()
+            except UnicodeDecodeError as e:
+                print("Error reading line {0}: {1}".format(i, e))
+                continue
             line = line.strip()
             # print(line)
             if len(line) == 0:
