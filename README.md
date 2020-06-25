@@ -18,6 +18,7 @@ python3 extract_cves.py -h
 python3 extract_cves.py -u https://chromereleases.googleblog.com/2018/12/stable-channel-update-for-desktop.html
 python3 extract_cves.py -u https://www.oracle.com/technetwork/security-advisory/cpuoct2018-4428296.html
 python3 extract_cves.py -u https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.34
+python3 extract_cves.py -u https://nvidia.custhelp.com/app/answers/detail/a_id/5031/kw/Security%20Bulletin
 
 # Get CVEs from file with verbose output
 python3 extract_cves.py -v -f malformed_cves.txt
