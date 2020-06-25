@@ -89,17 +89,33 @@ class ExtractCVEs():
             if len(line) == 0:
                 continue
             # check if the line contains a CVE
-            elif line.find("CVE-") == -1:
-                continue
+            #elif line.find("CVE-") == -1:
+            #    continue
 
+            #print(line)
             line = line.replace(".", " ")
             line = line.replace(",", " ")
             line = line.replace(";", " ")
+            line = line.replace("<", " ")
+            line = line.replace(">", " ")
+            line = line.replace("/", " ")
+            line = line.replace(":", " ")
+            line = line.replace("\u2010", "-")
+            line = line.replace("\u2011", "-")
+            line = line.replace("\u2012", "-")
+            line = line.replace("\u2013", "-")
+            line = line.replace("\u2014", "-")
             line = line.split(" ")
+            
+            
+            ###print(f"{i} {line}")
             for l in line:
-                # check if the chunk contains a CVE
-                if l.find("CVE-") > -1:
+            # check if the chunk contains a CVE
+                if len(l) < 13:
+                    continue
+                elif l.find("CVE") > -1:
                     self.chunks.append(l)
+                    print(f"Adding Chunk: {l}")
 
     def check_cve(self, cve, verbose=0):
         """
@@ -108,7 +124,7 @@ class ExtractCVEs():
 
         errors = []
 
-        self._verb("Checking CVE: {0}".format(cve))
+        self._verb(f"Checking CVE: {cve}")
 
         # if not len(cve) >= 13:
         #    errors.append("The minimum length of a CVE is thirteen chars")
@@ -172,6 +188,10 @@ class ExtractCVEs():
             """
             extracts the CVEs from one chunk
             """
+            print(f"Extracting: {chunk}")
+            #for c in chunk:
+            #    print(c)
+            #    print(c.encode('raw_unicode_escape'))
 
             hit = chunk.find("CVE-")
             start = hit+4
@@ -202,7 +222,7 @@ class ExtractCVEs():
         """
 
         for chunk in self.chunks:
-            self._verb("Chunk: '{0}'".format(chunk))
+            self._verb(f"Chunk: '{chunk}'")
             cve = self.extract_cve(chunk)
             status, msg = self.check_cve(cve)
             self._verb("CVE: {0} Status {1} Message {2}".format(cve, status, msg))
