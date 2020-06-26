@@ -180,10 +180,6 @@ class ExtractCVEs():
             """
             extracts the CVEs from one chunk
             """
-            #self._verb(f"Extracting: {chunk}")
-            #for c in chunk:
-            #    print(c)
-            #    print(c.encode('raw_unicode_escape'))
 
             hit = chunk.find("CVE-")
             start = hit+4
@@ -274,7 +270,7 @@ class ExtractCVEs():
         print("Age of CVE database: {0} hours".format(age))
 
         if age > 48:
-            print("Your CVE database seems outdated")
+            print("Your CVE database seems to be outdated")
             self._download_mitre_db()
 
         with gzip.open(fn, 'rb') as f:
