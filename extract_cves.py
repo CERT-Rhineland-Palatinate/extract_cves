@@ -84,38 +84,30 @@ class ExtractCVEs():
             except UnicodeDecodeError as e:
                 print("Error reading line {0}: {1}".format(i, e))
                 continue
-            line = line.strip()
-            # print(line)
-            if len(line) == 0:
-                continue
-            # check if the line contains a CVE
-            #elif line.find("CVE-") == -1:
-            #    continue
 
-            #print(line)
-            line = line.replace(".", " ")
-            line = line.replace(",", " ")
-            line = line.replace(";", " ")
-            line = line.replace("<", " ")
-            line = line.replace(">", " ")
-            line = line.replace("/", " ")
-            line = line.replace(":", " ")
-            line = line.replace("\u2010", "-")
-            line = line.replace("\u2011", "-")
-            line = line.replace("\u2012", "-")
-            line = line.replace("\u2013", "-")
-            line = line.replace("\u2014", "-")
-            line = line.split(" ")
+            replace_chars = [".", ",", ";", "<", ">", "/", ":", "=", "div", "li", "a", "href"]
+            for r in replace_chars:
+                line = line.replace(r, " ")
+
+            line = line.strip()
+
+            if len(line) < 13:
+                continue
             
+            replace_chars = ["\u2010", "\u2011", "\u2012", "\u2013", "\u2014"]
+            for r in replace_chars:
+                line = line.replace(r, "-")
+            
+            line = line.split(" ")
             
             ###print(f"{i} {line}")
             for l in line:
             # check if the chunk contains a CVE
                 if len(l) < 13:
                     continue
-                elif l.find("CVE") > -1:
+                elif l.find("CVE-") > -1:
                     self.chunks.append(l)
-                    print(f"Adding Chunk: {l}")
+                    self._verb(f"Adding Chunk: {l}")
 
     def check_cve(self, cve, verbose=0):
         """
@@ -188,7 +180,7 @@ class ExtractCVEs():
             """
             extracts the CVEs from one chunk
             """
-            print(f"Extracting: {chunk}")
+            #self._verb(f"Extracting: {chunk}")
             #for c in chunk:
             #    print(c)
             #    print(c.encode('raw_unicode_escape'))
